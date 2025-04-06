@@ -1,0 +1,33 @@
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+
+# Dependency directories
+node_modules/
+/dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# MongoDB
+data/db/
+
+# Custom additions for hospital management system
+/uploads/              
+/temp/                 
+/config/config.json     
+/outline               
+/timeline              
