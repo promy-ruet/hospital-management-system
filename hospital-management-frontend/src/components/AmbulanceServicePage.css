@@ -1,0 +1,241 @@
+/* AmbulanceServicePage.css */
+
+.ambulance-service-page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  /* Hero Section Styles */
+  .hero-section {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .cover-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  
+  .cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+  }
+  
+  .booking-form-container {
+    position: relative;
+    z-index: 3;
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .form-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-header h1 {
+    color: #2a7f62; /* Updated to soothing green */
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-header p {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .form-header h2 {
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .booking-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  .submit-btn {
+    background-color: #2a7f62; /* Updated to soothing green */
+    color: white;
+    border: none;
+    padding: 1rem;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .submit-btn:hover {
+    background-color: #1e6b52;
+  }
+  
+  /* Services Section Styles */
+  .services-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #f8f9fa;
+  }
+  
+  .services-section h2 {
+    text-align: center;
+    color: #2a7f62;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .service-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e0e0e0;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-card h3 {
+    color: #2a7f62;
+    margin-bottom: 0.8rem;
+  }
+  
+  .service-card p {
+    color: #666;
+    line-height: 1.5;
+  }
+  
+  /* Emergency Section Styles */
+  .emergency-section {
+    background-color: #2a7f62;
+    color: white;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+  
+  .emergency-section h2 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .emergency-section p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .emergency-steps {
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    padding-left: 1.5rem;
+  }
+  
+  .emergency-steps li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .contact-info {
+    margin-top: 2rem;
+  }
+  
+  .emergency-number {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .non-emergency {
+    margin-top: 1.5rem;
+  }
+  
+  .book-now-btn {
+    background: none;
+    border: none;
+    color: white;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0;
+    margin-left: 0.5rem;
+  }
+  
+  .book-now-btn:hover {
+    color: #e0f2e9;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-section {
+      min-height: 700px;
+    }
+    
+    .service-cards {
+      grid-template-columns: 1fr;
+    }
+    
+    .booking-form-container {
+      padding: 1.5rem;
+    }
+  }
+  /* Add this to your AmbulanceServicePage.css */
+.success-message {
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
