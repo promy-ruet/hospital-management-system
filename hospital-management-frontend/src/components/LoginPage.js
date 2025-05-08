@@ -1,34 +1,57 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
-import { Link, useHistory } from 'react-router-dom';
-import './LoginPage.css';
+import './LoginPage.css'; // Make sure to create this CSS file
 
-const LoginPage = ({ setIsAuthenticated }) => {
-  const [formData, setFormData] = useState({ username: '', password: '' });
-  const [message, setMessage] = useState('');
+const LoginPage = () => {
   const history = useHistory();
+  const [credentials, setCredentials] = useState({
+    username: '',
+    password: ''
+  });
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setCredentials(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
     try {
-      const response = await axios.post('http://localhost:3000/api/login', formData);
+      // Make sure this URL matches your backend API endpoint
+      const response = await axios.post('http://localhost:3000/api/login', credentials);
+      
       if (response.data.success) {
-        setMessage('Login successful');
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('username', response.data.username);
-        setIsAuthenticated(true);
+        // Store token and user info in localStorage
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('username', response.data.user.username);
+        localStorage.setItem('fullName', response.data.user.fullName);
+        
+        // Redirect to appointment or dashboard page
         history.push('/appointment');
+      } else {
+        setError(response.data.message || 'Login failed');
       }
     } catch (error) {
-      setMessage(error.response?.data?.message || 'Invalid username or password');
+      console.error('Login error:', error);
+      // Handle different error types
+      if (error.response) {
+        // The server responded with a status code outside the 2xx range
+        setError(error.response.data.message || 'Invalid username or password');
+      } else if (error.request) {
+        // The request was made but no response was received
+        setError('No response from server. Please try again later.');
+      } else {
+        // Something happened in setting up the request
+        setError('An error occurred. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -36,34 +59,40 @@ const LoginPage = ({ setIsAuthenticated }) => {
     <div className="login-page-container">
       <div className="login-form-container">
         <h2>Login</h2>
+        {error && <div className="error-message">{error}</div>}
+        
         <form onSubmit={handleSubmit} className="login-form">
-          <div className="form-group">
-            <label htmlFor="username">Username:</label>
+          <div className="input-group">
+            <label>Username:</label>
             <input
               type="text"
-              id="username"
               name="username"
-              value={formData.username}
+              value={credentials.username}
               onChange={handleChange}
+              placeholder="Enter your username"
               required
             />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password:</label>
+          
+          <div className="input-group">
+            <label>Password:</label>
             <input
               type="password"
-              id="password"
               name="password"
-              value={formData.password}
+              value={credentials.password}
               onChange={handleChange}
+              placeholder="Enter your password"
               required
             />
           </div>
-          <button type="submit" className="login-button">Login</button>
+          
+          <button type="submit" disabled={isLoading} className="login-btn">
+            {isLoading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
-        {message && <p className="message">{message}</p>}
-        <div className="create-account">
-          Don't have an account? <Link to="/register">Create new account</Link>
+        
+        <div className="login-footer">
+          <p>Don't have an account? <a href="/register">Create new account</a></p>
         </div>
       </div>
     </div>

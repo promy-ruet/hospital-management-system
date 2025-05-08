@@ -36,103 +36,8 @@ import ContactUs from './components/ContactUs';
 import LoginPage from './components/LoginPage';
 import RegistrationPage from './components/RegistrationPage';
 import AppointmentPage from './components/AppointmentPage';
+import Navbar from './components/Navbar'; // Import the Navbar component
 import './App.css';
-
-// Navigation component
-const Navigation = ({ isAuthenticated, setIsAuthenticated }) => {
-  const location = useLocation();
-  const history = useHistory();
-  
-  const linkStyle = {
-    textDecoration: 'none',
-    padding: '10px 15px',
-    margin: '0 5px',
-    transition: 'color 0.3s ease'
-  };
-  
-  const activeLinkStyle = {
-    ...linkStyle,
-    color: '#4CAF50',
-    fontWeight: 'bold',
-    borderBottom: '2px solid #4CAF50'
-  };
-  
-  const inactiveLinkStyle = {
-    ...linkStyle,
-    color: '#333'
-  };
-  
-  const isActive = (path) => {
-    if (path === '/' && location.pathname === '/') {
-      return true;
-    }
-    return path !== '/' && location.pathname.startsWith(path);
-  };
-
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-    localStorage.removeItem('isAuthenticated');
-    history.push('/');
-  };
-
-  const handleAppointmentClick = () => {
-    if (!isAuthenticated) {
-      history.push('/login');
-    } else {
-      history.push('/appointment');
-    }
-  };
-  
-  return (
-    <nav style={{ 
-      padding: '20px', 
-      display: 'flex', 
-      justifyContent: 'center', 
-      alignItems: 'center'
-    }}>
-      <Link to="/" style={isActive('/') ? activeLinkStyle : inactiveLinkStyle}>HOME</Link>
-      <Link to="/about" style={isActive('/about') ? activeLinkStyle : inactiveLinkStyle}>ABOUT US</Link>
-      <DepartmentsDropdown />
-      <ServicesDropdown />
-      <Link to="/consultants" style={isActive('/consultants') ? activeLinkStyle : inactiveLinkStyle}>CONSULTANTS</Link>
-      <Link to="/testimonials" style={isActive('/testimonials') ? activeLinkStyle : inactiveLinkStyle}>TESTIMONIALS</Link>
-      <Link to="/contact" style={isActive('/contact') ? activeLinkStyle : inactiveLinkStyle}>CONTACT US</Link>
-      
-      <button 
-        onClick={handleAppointmentClick}
-        style={{
-          textDecoration: 'none',
-          backgroundColor: '#e67e22',
-          color: 'white',
-          padding: '10px 15px',
-          borderRadius: '5px',
-          border: 'none',
-          cursor: 'pointer',
-          margin: '0 5px'
-        }}
-      >
-        APPOINTMENT
-      </button>
-      
-      {isAuthenticated && (
-        <button 
-          onClick={handleLogout}
-          style={{
-            backgroundColor: '#e74c3c',
-            color: 'white',
-            padding: '10px 15px',
-            borderRadius: '5px',
-            border: 'none',
-            cursor: 'pointer',
-            margin: '0 5px'
-          }}
-        >
-          LOGOUT
-        </button>
-      )}
-    </nav>
-  );
-};
 
 // PrivateRoute component
 const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -257,10 +162,6 @@ const DepartmentsPreview = () => {
             fontSize: '16px',
             fontWeight: '600',
             transition: 'all 0.3s ease',
-            ':hover': {
-              backgroundColor: '#138a72',
-              transform: 'translateY(-2px)'
-            }
           }}
         >
           View All Departments
@@ -287,42 +188,8 @@ function App() {
         flexDirection: 'column',
         minHeight: '100vh'
       }}>
-        {/* Top Bar */}
-        <div style={{ 
-          backgroundColor: '#4CAF50', 
-          color: 'white', 
-          padding: '10px 0',
-          width: '100%'
-        }}>
-          <div style={{ 
-            display: 'flex', 
-            justifyContent: 'center', 
-            alignItems: 'center',
-            maxWidth: '1200px',
-            margin: '0 auto'
-          }}>
-            <a href="tel:01979026778" style={{ 
-              color: 'white', 
-              marginRight: '20px', 
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <span style={{ marginRight: '5px' }}>📞</span> 019712889348
-            </a>
-            <a href="mailto:meditrustHospital@gmail.com" style={{ 
-              color: 'white', 
-              textDecoration: 'none',
-              display: 'flex',
-              alignItems: 'center'
-            }}>
-              <span style={{ marginRight: '5px' }}>✉️</span> meditrusthospital@gmail.com
-            </a>
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <Navigation isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
+        {/* Navigation - Use Navbar component instead of Navigation */}
+        <Navbar isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated} />
 
         {/* Main Content */}
         <main style={{ flex: '1' }}>
@@ -458,9 +325,6 @@ function AboutUsPreview() {
         display: 'flex', 
         alignItems: 'center', 
         gap: '30px',
-        '@media (max-width: 768px)': {
-          flexDirection: 'column'
-        }
       }}>
         <div style={{ flex: '1' }}>
           <h2 style={{
@@ -491,22 +355,13 @@ function AboutUsPreview() {
               cursor: 'pointer',
               marginTop: '15px',
               transition: 'all 0.3s ease',
-              ':hover': {
-                backgroundColor: '#138a72'
-              }
             }}>
               READ MORE +
             </button>
           </Link>
         </div>
         
-        <div style={{ 
-          flex: '1', 
-          textAlign: 'center',
-          '@media (max-width: 768px)': {
-            order: '-1'
-          }
-        }}>
+        <div style={{ flex: '1', textAlign: 'center' }}>
           <img 
             src="/doctor.jpg" 
             alt="Hospital" 
@@ -568,9 +423,6 @@ function FullAboutUs() {
           alignItems: 'center', 
           gap: '30px',
           marginBottom: '40px',
-          '@media (max-width: 768px)': {
-            flexDirection: 'column'
-          }
         }}>
           <div style={{ flex: '1' }}>
             <h2 style={{
@@ -595,13 +447,7 @@ function FullAboutUs() {
             </p>
           </div>
           
-          <div style={{ 
-            flex: '1', 
-            textAlign: 'center',
-            '@media (max-width: 768px)': {
-              order: '-1'
-            }
-          }}>
+          <div style={{ flex: '1', textAlign: 'center' }}>
             <img 
               src="/doctor.jpg" 
               alt="Hospital" 
@@ -718,4 +564,5 @@ function FullAboutUs() {
     </div>
   );
 }
+
 export default App;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Route, Switch, useRouteMatch, useHistory } from 'react-router-dom';
 
-// Department Details Component remains the same
+// Department Details Component
 const DepartmentDetail = ({ department }) => {
   return (
     <div style={{ padding: '0', width: '100vw', margin: '0 auto' }}>
@@ -62,11 +62,7 @@ const DepartmentDetail = ({ department }) => {
               borderRadius: '0px'
             }}
           />
-       
-
         </div>
-
-      
       </div>
       
       {/* Equipment and Surgeries Section */}
@@ -155,18 +151,18 @@ const DepartmentsPage = () => {
     {
       id: 1,
       title: "Cardiology",
+      slug: "cardiology",
       description: "Meditrust hospital has a full fledged cardiology department which has advanced facilities for providing various types of cardio services for our patients.",
       fullDescription: "Meditrust hospital has a full fledged cardiology department which has advanced facilities for providing various types of cardio services for our patients. Our hospital has the following specialized infrastructure for providing cardiac services.\n\nCardiac Operation Theatre- We are equipped with an advanced cardiac operation theatre which is capable of performing all types of cardiac services. Meditrust Hospitals has a team of dedicated cardiac surgeons who are available to perform surgeries 24 hours a day and deal with emergency cases at very short notice. Our surgical theatre is equipped with the following advanced equipment which is used for performing surgeries within the hospital.",
       icon: "❤️",
       bannerImage: "/cardd.jpg",
-    descriptionImage: "/cardio.jpg",
+      descriptionImage: "/cardio.jpg",
       equipment: [
         "BOC Make Boyle Apparatus",
         "Hanaolox lighting system",
         "Defibrillator with pedals",
         "Intra Aortic Balloon",
         "Intra Aortic Balloon Pump(IABP) Machine"
-        
       ],
       services: [
         "All types of Open and Closed Cardiac Surgeries",
@@ -179,18 +175,18 @@ const DepartmentsPage = () => {
     {
       id: 2,
       title: "General Medicine",
+      slug: "general-medicine",
       description: "Meditrust hospital has a highly specialized department of general medicine which is equipped to deal with any type of medical injuries or emergency.",
       fullDescription: "Meditrust hospital has a highly specialized department of general medicine which is equipped to deal with any type of medical injuries or emergency.Our General Medicine department provides comprehensive care for adults with a wide range of medical conditions. Our team of experienced physicians and specialists are trained to diagnose and treat complex medical problems, with a focus on preventive care and health maintenance.",
       icon: "🩺",
       bannerImage: "/medi.jpg",
-    descriptionImage: "/medii.jpg", 
+      descriptionImage: "/medii.jpg", 
       equipment: [
         "Electrocardiogram (ECG) Machine",
         "Pulse Oximeter",
         "Autoclave Sterilizer",
         "Oxygen Concentrator",
         "Otoscope and Ophthalmoscope"
-        
       ],
       services: [
         "Primary care for adults",
@@ -203,11 +199,12 @@ const DepartmentsPage = () => {
     {
       id: 3,
       title: "Orthopedics",
+      slug: "orthopedics",
       description: "Our hospital's orthopaedic department has the highest standards of orthopaedic care and is renowned for its expertise and resources.",
       fullDescription: "Our hospital's orthopaedic department has the highest standards of orthopaedic care and is renowned for its expertise and resources.The Orthopedics department at Meditrust Hospital specializes in the diagnosis, treatment, and rehabilitation of disorders of the musculoskeletal system. Our team of orthopedic surgeons and specialists provide comprehensive care for bone, joint, ligament, tendon, muscle, and nerve conditions.",
       icon: "🦴",
       bannerImage: "/Ortho.jpg",
-    descriptionImage: "/orthoo.jpg",
+      descriptionImage: "/orthoo.jpg",
       equipment: [
         "Digital X-ray systems",
         "Arthroscopy equipment",
@@ -226,11 +223,12 @@ const DepartmentsPage = () => {
     {
       id: 4,
       title: "Paediatrics",
+      slug: "paediatrics",
       description: "Our Hospital offers one of the finest paediatric treatment services for children of different ages. We have highly specialized paediatric services.",
       fullDescription: "Our Hospital offers one of the finest paediatric treatment services for children of different ages. We have highly specialized paediatric services.Our Pediatrics department is dedicated to providing comprehensive medical care for infants, children, and adolescents. Our team of pediatricians and specialists are trained to address the unique healthcare needs of children in a child-friendly environment.",
       icon: "👶",
       bannerImage: "/padi.jpg",
-    descriptionImage: "/paedi.jpg",
+      descriptionImage: "/paedi.jpg",
       equipment: [
         "Infant Radiant Warmer",
         "Neonatal Ventilator",
@@ -249,6 +247,7 @@ const DepartmentsPage = () => {
     {
       id: 5,
       title: "Anaesthesia",
+      slug: "anaesthesia",
       description: "Meditrust hospital has a full fledged Anesthesiology and critical care department which has been developed to help in the rapid recovery of patients.",
       fullDescription: "Meditrust hospital has a full fledged Anesthesiology and critical care department which has been developed to help in the rapid recovery of patients.Our Anesthesiology department provides perioperative care, developing anesthetic plans tailored to each patient's needs. Our anesthesiologists work closely with surgeons and other specialists to ensure patient safety and comfort during procedures.",
       icon: "💉",
@@ -260,7 +259,6 @@ const DepartmentsPage = () => {
         "Laryngeal Mask Airway ",
         "Anaesthesia Gas Monitor",
         "Pulse Oximeter"
-        
       ],
       services: [
         "General anesthesia",
@@ -273,6 +271,7 @@ const DepartmentsPage = () => {
     {
       id: 6,
       title: "Urology",
+      slug: "urology",
       description: "Meditrust hospital has one of the best facilities for urology and kidney transplantation. We are equipped with state of the art pre and post-operative care.",
       fullDescription: "Meditrust hospital has one of the best facilities for urology and kidney transplantation. We are equipped with state of the art pre and post-operative care.The Urology department at Meditrust Hospital provides comprehensive care for disorders of the urinary tract and male reproductive system. Our team of urologists specializes in both medical and surgical treatments for a wide range of urological conditions.",
       icon: "🚽",
@@ -303,144 +302,137 @@ const DepartmentsPage = () => {
         </h1>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '30px' }}>
-        {allDepartments.map(dept => (
-  <div 
-    key={dept.id} 
-    style={{ 
-      backgroundColor: 'white', 
-      padding: '30px', 
-      borderRadius: '8px',
-      transition: 'all 0.3s ease',
-      boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: '#f0f8ff',
-        transform: 'translateY(-5px)',
-        boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
-      }
-    }}
-    onMouseOver={(e) => {
-      e.currentTarget.style.backgroundColor = '#f0f8ff';
-      e.currentTarget.style.transform = 'translateY(-5px)';
-      e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
-    }}
-    onMouseOut={(e) => {
-      e.currentTarget.style.backgroundColor = 'white';
-      e.currentTarget.style.transform = 'translateY(0)';
-      e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-    }}
-  >
-    <div style={{ fontSize: '36px', marginBottom: '20px', color: '#2c9687', textAlign: 'center' }}>
-      {dept.icon}
-    </div>
-    
-    <h3 style={{ fontSize: '22px', marginBottom: '15px', color: '#333', fontWeight: '600', textAlign: 'left' }}>
-      {dept.title}
-    </h3>
+          {allDepartments.map(dept => (
+            <div 
+              key={dept.id} 
+              style={{ 
+                backgroundColor: 'white', 
+                padding: '30px', 
+                borderRadius: '8px',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+                cursor: 'pointer'
+              }}
+              onMouseOver={(e) => {
+                e.currentTarget.style.backgroundColor = '#f0f8ff';
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+              }}
+              onMouseOut={(e) => {
+                e.currentTarget.style.backgroundColor = 'white';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+              }}
+            >
+              <div style={{ fontSize: '36px', marginBottom: '20px', color: '#2c9687', textAlign: 'center' }}>
+                {dept.icon}
+              </div>
+              
+              <h3 style={{ fontSize: '22px', marginBottom: '15px', color: '#333', fontWeight: '600', textAlign: 'left' }}>
+                {dept.title}
+              </h3>
 
-    <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.6', marginBottom: '20px', textAlign: 'justify' }}>
-      {dept.description}
-    </p>
+              <p style={{ color: '#666', fontSize: '16px', lineHeight: '1.6', marginBottom: '20px', textAlign: 'justify' }}>
+                {dept.description}
+              </p>
 
-    <button 
-      onClick={() => history.push(`/departments/${dept.id}`)}
-      style={{ 
-        background: 'none', 
-        color: '#16a085', 
-        fontWeight: 'bold', 
-        fontSize: '14px', 
-        border: 'none', 
-        cursor: 'pointer',
-        textDecoration: 'none' 
-      }}
-    >
-      READ MORE <span style={{ marginLeft: '5px' }}>+</span>
-    </button>
-  </div>
-))}
+              <button 
+                onClick={() => history.push(`/departments/${dept.slug}`)}
+                style={{ 
+                  background: 'none', 
+                  color: '#16a085', 
+                  fontWeight: 'bold', 
+                  fontSize: '14px', 
+                  border: 'none', 
+                  cursor: 'pointer',
+                  textDecoration: 'none' 
+                }}
+              >
+                READ MORE <span style={{ marginLeft: '5px' }}>+</span>
+              </button>
+            </div>
+          ))}
         </div>
       </div>
     </div>
   );
 };
 
-
-
-// Departments Dropdown Component remains the same
+// Departments Dropdown Component
 const DepartmentsDropdown = () => {
-    const [isOpen, setIsOpen] = useState(false);
-    const history = useHistory();
-  
-    const departments = [
-      { id: 1, name: "Cardiology" },
-      { id: 2, name: "General Medicine" },
-      { id: 3, name: "Orthopedics" },
-      { id: 4, name: "Paediatrics" },
-      { id: 5, name: "Anaesthesia" },
-      { id: 6, name: "Urology" },
-    ];
-  
-    const handleNavigation = (deptId) => {
-      history.push(`/departments/${deptId}`);
-      setIsOpen(false);
-    };
-  
-    return (
-      <div style={{ position: 'relative', display: 'inline-block' }}>
-        <button 
-          style={{
-            background: "none",
-            border: "none",
-            padding: "10px 15px",
-            fontSize: "16px",
-            cursor: "pointer",
-            color: "#333",
-            display: "flex",
-            alignItems: "center"
-          }}
-          onClick={(e) => {
-            e.preventDefault(); 
-            setIsOpen(!isOpen);
-          }}
-        >
-          DEPARTMENTS <span style={{ marginLeft: "5px" }}>▼</span>
-        </button>
-        {isOpen && (
-          <div style={{
-            position: 'absolute',
-            backgroundColor: '#fff',
-            minWidth: '200px',
-            boxShadow: '0px 8px 16px rgba(0,0,0,0.2)',
-            zIndex: 1,
-            borderRadius: '5px',
-            padding: '10px 0'
-          }}>
-            {departments.map(dept => (
-              <button
-                key={dept.id}
-                onClick={() => handleNavigation(dept.id)}
-                style={{
-                  color: '#333',
-                  padding: '12px 16px',
-                  textDecoration: 'none',
-                  display: 'block',
-                  width: '100%',
-                  textAlign: 'left',
-                  background: 'none',
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-                onMouseOver={(e) => e.target.style.backgroundColor = '#f1f1f1'}
-                onMouseOut={(e) => e.target.style.backgroundColor = 'transparent'}
-              >
-                {dept.name}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-    );
+  const [isOpen, setIsOpen] = useState(false);
+  const history = useHistory();
+
+  const departments = [
+    { id: 1, name: "Cardiology", slug: "cardiology" },
+    { id: 2, name: "General Medicine", slug: "general-medicine" },
+    { id: 3, name: "Orthopedics", slug: "orthopedics" },
+    { id: 4, name: "Paediatrics", slug: "paediatrics" },
+    { id: 5, name: "Anaesthesia", slug: "anaesthesia" },
+    { id: 6, name: "Urology", slug: "urology" },
+  ];
+
+  const handleNavigation = (deptSlug) => {
+    history.push(`/departments/${deptSlug}`);
+    setIsOpen(false);
   };
+
+  return (
+    <div style={{ position: 'relative', display: 'inline-block' }}>
+      <button 
+        style={{
+          background: "none",
+          border: "none",
+          padding: "10px 15px",
+          fontSize: "16px",
+          cursor: "pointer",
+          color: "#333",
+          display: "flex",
+          alignItems: "center"
+        }}
+        onClick={(e) => {
+          e.preventDefault(); 
+          setIsOpen(!isOpen);
+        }}
+      >
+        DEPARTMENTS <span style={{ marginLeft: "5px" }}>▼</span>
+      </button>
+      {isOpen && (
+        <div style={{
+          position: 'absolute',
+          backgroundColor: '#fff',
+          minWidth: '200px',
+          boxShadow: '0px 8px 16px rgba(0,0,0,0.2)',
+          zIndex: 1,
+          borderRadius: '5px',
+          padding: '10px 0'
+        }}>
+          {departments.map(dept => (
+            <button
+              key={dept.id}
+              onClick={() => handleNavigation(dept.slug)}
+              style={{
+                color: '#333',
+                padding: '12px 16px',
+                textDecoration: 'none',
+                display: 'block',
+                width: '100%',
+                textAlign: 'left',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              onMouseOver={(e) => e.target.style.backgroundColor = '#f1f1f1'}
+              onMouseOut={(e) => e.target.style.backgroundColor = 'transparent'}
+            >
+              {dept.name}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
 
 // Main Department Component that handles routing
 const DepartmentsRouter = () => {
@@ -450,18 +442,18 @@ const DepartmentsRouter = () => {
     {
       id: 1,
       title: "Cardiology",
+      slug: "cardiology",
       description: "Meditrust hospital has a full fledged cardiology department which has advanced facilities for providing various types of cardio services for our patients.",
       fullDescription: "Meditrust hospital has a full fledged cardiology department which has advanced facilities for providing various types of cardio services for our patients. Our hospital has the following specialized infrastructure for providing cardiac services.\n\nCardiac Operation Theatre- We are equipped with an advanced cardiac operation theatre which is capable of performing all types of cardiac services. Meditrust Hospitals has a team of dedicated cardiac surgeons who are available to perform surgeries 24 hours a day and deal with emergency cases at very short notice. Our surgical theatre is equipped with the following advanced equipment which is used for performing surgeries within the hospital.",
       icon: "❤️",
       bannerImage: "/cardd.jpg",
-    descriptionImage: "/cardio.jpg",
+      descriptionImage: "/cardio.jpg",
       equipment: [
         "BOC Make Boyle Apparatus",
         "Hanaolox lighting system",
         "Defibrillator with pedals",
         "Intra Aortic Balloon",
         "Intra Aortic Balloon Pump(IABP) Machine"
-        
       ],
       services: [
         "All types of Open and Closed Cardiac Surgeries",
@@ -474,19 +466,18 @@ const DepartmentsRouter = () => {
     {
       id: 2,
       title: "General Medicine",
+      slug: "general-medicine",
       description: "Meditrust hospital has a highly specialized department of general medicine which is equipped to deal with any type of medical injuries or emergency.",
       fullDescription: "Meditrust hospital has a highly specialized department of general medicine which is equipped to deal with any type of medical injuries or emergency.Our General Medicine department provides comprehensive care for adults with a wide range of medical conditions. Our team of experienced physicians and specialists are trained to diagnose and treat complex medical problems, with a focus on preventive care and health maintenance.",
       icon: "🩺",
       bannerImage: "/medi.jpg",
-    descriptionImage: "/medii.jpg",
-
+      descriptionImage: "/medii.jpg",
       equipment: [
         "Electrocardiogram (ECG) Machine",
         "Pulse Oximeter",
         "Autoclave Sterilizer",
         "Oxygen Concentrator",
         "Otoscope and Ophthalmoscope"
-        
       ],
       services: [
         "Primary care for adults",
@@ -499,11 +490,12 @@ const DepartmentsRouter = () => {
     {
       id: 3,
       title: "Orthopedics",
+      slug: "orthopedics",
       description: "Our hospital's orthopaedic department has the highest standards of orthopaedic care and is renowned for its expertise and resources.",
       fullDescription: "Our hospital's orthopaedic department has the highest standards of orthopaedic care and is renowned for its expertise and resources.The Orthopedics department at Meditrust Hospital specializes in the diagnosis, treatment, and rehabilitation of disorders of the musculoskeletal system. Our team of orthopedic surgeons and specialists provide comprehensive care for bone, joint, ligament, tendon, muscle, and nerve conditions.",
       icon: "🦴",
       bannerImage: "/Ortho.jpg",
-    descriptionImage: "/orthoo.jpg",
+      descriptionImage: "/orthoo.jpg",
       equipment: [
         "Digital X-ray systems",
         "Arthroscopy equipment",
@@ -522,11 +514,12 @@ const DepartmentsRouter = () => {
     {
       id: 4,
       title: "Paediatrics",
+      slug: "paediatrics",
       description: "Our Hospital offers one of the finest paediatric treatment services for children of different ages. We have highly specialized paediatric services.",
       fullDescription: "Our Hospital offers one of the finest paediatric treatment services for children of different ages. We have highly specialized paediatric services.Our Pediatrics department is dedicated to providing comprehensive medical care for infants, children, and adolescents. Our team of pediatricians and specialists are trained to address the unique healthcare needs of children in a child-friendly environment.",
       icon: "👶",
       bannerImage: "/padi.jpg",
-    descriptionImage: "/paedi.jpg",
+      descriptionImage: "/paedi.jpg",
       equipment: [
         "Infant Radiant Warmer",
         "Neonatal Ventilator",
@@ -545,6 +538,7 @@ const DepartmentsRouter = () => {
     {
       id: 5,
       title: "Anaesthesia",
+      slug: "anaesthesia",
       description: "Meditrust hospital has a full fledged Anesthesiology and critical care department which has been developed to help in the rapid recovery of patients.",
       fullDescription: "Meditrust hospital has a full fledged Anesthesiology and critical care department which has been developed to help in the rapid recovery of patients.Our Anesthesiology department provides perioperative care, developing anesthetic plans tailored to each patient's needs. Our anesthesiologists work closely with surgeons and other specialists to ensure patient safety and comfort during procedures.",
       icon: "💉",
@@ -556,7 +550,6 @@ const DepartmentsRouter = () => {
         "Laryngeal Mask Airway ",
         "Anaesthesia Gas Monitor",
         "Pulse Oximeter"
-        
       ],
       services: [
         "General anesthesia",
@@ -569,6 +562,7 @@ const DepartmentsRouter = () => {
     {
       id: 6,
       title: "Urology",
+      slug: "urology",
       description: "Meditrust hospital has one of the best facilities for urology and kidney transplantation. We are equipped with state of the art pre and post-operative care.",
       fullDescription: "Meditrust hospital has one of the best facilities for urology and kidney transplantation. We are equipped with state of the art pre and post-operative care.The Urology department at Meditrust Hospital provides comprehensive care for disorders of the urinary tract and male reproductive system. Our team of urologists specializes in both medical and surgical treatments for a wide range of urological conditions.",
       icon: "🚽",
@@ -596,10 +590,21 @@ const DepartmentsRouter = () => {
       <Route exact path={path}>
         <DepartmentsPage />
       </Route>
-      <Route path={`${path}/:departmentId`}>
+      <Route path={`${path}/:departmentSlug`}>
         {({ match }) => {
-          const departmentId = parseInt(match.params.departmentId);
-          const department = allDepartments.find(dept => dept.id === departmentId);
+          // Find department by slug instead of ID
+          const departmentSlug = match.params.departmentSlug;
+          // First try to find by ID (for backward compatibility)
+          const departmentId = parseInt(departmentSlug);
+          let department;
+          
+          if (!isNaN(departmentId)) {
+            department = allDepartments.find(dept => dept.id === departmentId);
+          } else {
+            // Find by slug
+            department = allDepartments.find(dept => dept.slug === departmentSlug);
+          }
+          
           return department ? (
             <DepartmentDetail department={department} />
           ) : (
@@ -623,8 +628,6 @@ const DepartmentsRouter = () => {
     </Switch>
   );
 };
-
-
 
 // Export the components
 export { DepartmentsRouter, DepartmentsDropdown };

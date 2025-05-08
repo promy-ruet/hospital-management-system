@@ -1,79 +1,170 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './AmbulanceServicePage.css';
 
 const AmbulanceServicePage = () => {
+  // State declarations
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showAuthForm, setShowAuthForm] = useState(false);
+  const [authData, setAuthData] = useState({
+    username: '',
+    password: '',
+    fullName: '',
+    phoneNumber: '',
+    isRegistering: false
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
 
-  const handleSubmit = (e) => {
+  // API configuration
+  const API_BASE_URL = 'http://localhost:3001/api';
+
+  // Handle authentication submission
+  const handleAuthSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    setIsSubmitted(true);
+    setError('');
+    setSuccess('');
     
-    // Reset the form
-    e.target.reset();
-    
-    // Hide the message after 5 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 5000);
+    try {
+      const endpoint = authData.isRegistering ? 'register' : 'login';
+      const payload = {
+        username: authData.username,
+        password: authData.password
+      };
+      
+      if (authData.isRegistering) {
+        payload.fullName = authData.fullName;
+        payload.phoneNumber = authData.phoneNumber;
+      }
+      
+      const response = await fetch(`${API_BASE_URL}/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Authentication failed');
+      }
+
+      const data = await response.json();
+      
+      if (data.success) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
+        setUser(data.user);
+        setIsLoggedIn(true);
+        setShowAuthForm(false);
+        setSuccess(authData.isRegistering ? 
+          'Registration successful!' : 
+          'Login successful!');
+      } else {
+        throw new Error(data.message || 'Authentication failed');
+      }
+    } catch (err) {
+      console.error('Authentication error:', err);
+      setError(err.message || 'Failed to connect to server. Please try again.');
+    }
   };
 
+  // Handle form input changes
+  const handleAuthChange = (e) => {
+    setAuthData({
+      ...authData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  // Toggle between login and register modes
+  const toggleAuthMode = () => {
+    setAuthData({
+      ...authData,
+      isRegistering: !authData.isRegistering
+    });
+    setError('');
+    setSuccess('');
+  };
+
+  // Handle ambulance booking submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!isLoggedIn) {
+      setShowAuthForm(true);
+      return;
+    }
+    
+    const formData = {
+      patientName: e.target.elements[0].value,
+      location: e.target.elements[1].value,
+      phoneNumber: e.target.elements[2].value,
+      emergencyType: 'Standard'
+    };
+    
+    try {
+      const response = await fetch(`${API_BASE_URL}/ambulance-bookings`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify(formData)
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        setIsSubmitted(true);
+        e.target.reset();
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError('Failed to book ambulance. Please try again.');
+    }
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setIsLoggedIn(false);
+    setUser(null);
+  };
+
+  // Scroll to form function
   const scrollToForm = () => {
     document.querySelector('.booking-form-container').scrollIntoView({ 
       behavior: 'smooth' 
     });
   };
 
+  // Check for existing session on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    
+    if (token && savedUser) {
+      setIsLoggedIn(true);
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
+
   return (
     <div className="ambulance-service-page">
-      {/* Hero Section with Cover Image and Booking Form */}
+      {/* Hero Section with Cover Image Only */}
       <section className="hero-section">
         <div className="cover-image">
           <img src="/ambu.jpg" alt="Ambulance" className="cover-img" />
-          <div className="overlay"></div>
-        </div>
-        
-        <div className="booking-form-container" id="book">
-          <div className="form-header">
-            <h1>Ambulance Services</h1>
-            <p>Services 24/7</p>
-            <h2>Book an Appointment</h2>
-          </div>
-          
-          {isSubmitted && (
-            <div className="success-message">
-              Your booking request has been submitted successfully!
-            </div>
-          )}
-          
-          <form onSubmit={handleSubmit} className="booking-form">
-            <div className="form-group">
-              <input type="text" placeholder="Enter your Name" required />
-            </div>
-            
-            <div className="form-group">
-              <select required>
-                <option value="">Select City</option>
-                <option value="Dhaka">Dhaka</option>
-                <option value="Mymensingh">Mymensingh</option>
-                <option value="Rajshahi">Rajshahi</option>
-                <option value="Khulna">Khulna</option>
-                <option value="Barisal">Barisal</option>
-                <option value="Sylhet">Sylhet</option>
-                <option value="Chittagong">Chittagong</option>
-              </select>
-            </div>
-            
-            <div className="form-group">
-              <input type="tel" placeholder="Phone Number" required />
-            </div>
-            
-            <button type="submit" className="submit-btn">Submit</button>
-          </form>
         </div>
       </section>
 
-
+      
       {/* Our Services Section */}
       <section className="services-section">
         <h2>Our Ambulance Services</h2>
@@ -122,13 +213,7 @@ const AmbulanceServicePage = () => {
           <li><strong>Follow Guidance:</strong> Our team will guide you until the ambulance arrives.</li>
         </ol>
         
-        <div className="contact-info">
-          <h3>Contact Us Now</h3>
-          <p className="emergency-number">For emergency assistance, call <strong>1066</strong></p>
-          <p className="non-emergency">Need non-emergency transport? 
-            <button onClick={scrollToForm} className="book-now-btn">Book an Ambulance Now →</button>
-          </p>
-        </div>
+        
       </section>
     </div>
   );
